@@ -1,0 +1,29 @@
+
+name: "SonarCloudCodeScan"
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  Python-Repo-Scan:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+        with:
+          fetch_depth: 0
+        env:
+          #GitHubToken: ${{ secrets.githubtoken }}
+          SonarToken: ${{ secrets.SonarToken }}
+        with:
+          args: >
+            -Dsonar.organization=shreyasd-git
+            -Dsonar.projectKey=shell-script
